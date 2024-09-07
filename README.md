@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#">
-    <img alt="Horse" height="150" src="https://github.com/.png">
+    <img alt="FrontEnd" height="150" src="https://github.com/marcilima/consultacep/blob/main/frontend/img/frontend.png">
   </a>  
 </p><br>
 
