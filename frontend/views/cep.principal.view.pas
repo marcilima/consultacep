@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, cep.controller,
-  cep.model, Vcl.ExtCtrls;
+  cep.model, Vcl.ExtCtrls, DUnitX.TestFramework;
 
 type
   TfrmPrincipal = class(TForm)
@@ -34,7 +34,7 @@ type
     FController: TCepController;
   public
     { Public declarations }
-
+    MensagemErro: String;
     procedure AtualizarView;
   end;
 
@@ -47,6 +47,7 @@ implementation
 
 procedure TfrmPrincipal.AtualizarView;
 begin
+  MensagemErro := '';
   var dadosCep := FController.obterDadosCep;
   if Assigned(dadosCep) then
   begin
@@ -61,8 +62,11 @@ begin
     edtBairro.Clear;
     edtCidade.Clear;
     edtUF.Clear;
-    edtEstado.Clear;  
-    ShowMessage('Cep "'+edtCep.Text+'" não localizado, por favor verifique!')
+    edtEstado.Clear;
+
+    MensagemErro := 'Cep "'+edtCep.Text+'" não localizado. Por favor verifique!';
+    if TDUnitX.CurrentRunner.CurrentTestName='' then
+      ShowMessage(MensagemErro)
   end;
 end;
 
