@@ -1,10 +1,9 @@
+# Desafio de consulta a APIs de CEP.
 <p align="center">
   <a href="#">
-    <img alt="Horse" height="150" src="https://github.com/.png">
+    <img alt="FrontEnd" height="300" src="https://github.com/marcilima/consultacep/blob/main/frontend/img/frontend.png">
   </a>  
 </p><br>
-
-# Desafio de consulta a APIs de CEP.
 
 ## Descrição
  O desafio consiste em desenvolver uma aplicação que consulte o cep digitado e a partir dessa informação o sistema deverá consultar esse cep em uma das três APIs citadas abaixo.
