@@ -16,6 +16,7 @@ type
     procedure btnBuscarCepClick(Sender: TObject);
     procedure LimparCampos;
   public
+    ExecutandoTeste: Boolean;
     constructor Create;
     procedure AtualizarView;
     class procedure ShowView;
@@ -49,8 +50,11 @@ begin
 
   FMensagemErro := 'Cep "'+FView.edtCep.Text+'" não localizado. Por favor verifique!';
 
-  if TDUnitX.CurrentRunner.CurrentTestName='' then
-    ShowMessage(FMensagemErro)
+  if ExecutandoTeste then
+    Exit;
+
+  ShowMessage(FMensagemErro);
+
 
 end;
 

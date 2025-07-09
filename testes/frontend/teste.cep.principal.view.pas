@@ -45,6 +45,7 @@ end;
 procedure TTestePrincipalView.Setup;
 begin
   FCepController:= TCepController.Create();
+  FCepController.ExecutandoTeste := True;
 end;
 
 procedure TTestePrincipalView.TearDown;
@@ -52,7 +53,7 @@ begin
   FCepController.Free;
 end;
 
-procedure TTestePrincipalView.ConsultarCep(const AValue : String; const logradouro: String);
+procedure TTestePrincipalView.ConsultarCep(const AValue : string; const logradouro: string);
 var
   ReturnValue: Boolean;
 begin
