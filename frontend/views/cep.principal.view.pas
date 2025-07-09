@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, cep.controller,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   cep.model, Vcl.ExtCtrls, DUnitX.TestFramework;
 
 type
@@ -24,58 +24,16 @@ type
     edtUF: TEdit;
     Label7: TLabel;
     edtEstado: TEdit;
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure btnBuscarCepClick(Sender: TObject);
     procedure edtCepKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
-    FModel: TCepModel;
-    FController: TCepController;
   public
     { Public declarations }
-    MensagemErro: String;
-    procedure AtualizarView;
   end;
-
-var
-  frmPrincipal: TfrmPrincipal;
 
 implementation
 
 {$R *.dfm}
-
-procedure TfrmPrincipal.AtualizarView;
-begin
-  MensagemErro := '';
-  var dadosCep := FController.obterDadosCep;
-  if Assigned(dadosCep) then
-  begin
-    edtLogradouro.Text := dadosCep.Logradouro;
-    edtBairro.Text := dadosCep.Bairro;
-    edtCidade.Text := dadosCep.Cidade;
-    edtUF.Text := dadosCep.Uf;
-    edtEstado.Text := dadosCep.Estado;
-  end else
-  begin
-    edtLogradouro.Clear;
-    edtBairro.Clear;
-    edtCidade.Clear;
-    edtUF.Clear;
-    edtEstado.Clear;
-
-    MensagemErro := 'Cep "'+edtCep.Text+'" não localizado. Por favor verifique!';
-    if TDUnitX.CurrentRunner.CurrentTestName='' then
-      ShowMessage(MensagemErro)
-  end;
-end;
-
-procedure TfrmPrincipal.btnBuscarCepClick(Sender: TObject);
-begin
-  FController.CarregarDadosCep(edtCep.Text);
-
-  AtualizarView();
-end;
 
 procedure TfrmPrincipal.edtCepKeyPress(Sender: TObject; var Key: Char);
 begin
@@ -83,18 +41,6 @@ begin
   if not (Key in ['0'..'9', Chr(8)]) then
     Key := #0;
 
-end;
-
-procedure TfrmPrincipal.FormCreate(Sender: TObject);
-begin
-  FModel:= TCepModel.Create;
-  FController := TCepController.Create(FModel);
-end;
-
-procedure TfrmPrincipal.FormDestroy(Sender: TObject);
-begin
-  FController.Free;
-  FreeAndNil(FModel);
 end;
 
 end.

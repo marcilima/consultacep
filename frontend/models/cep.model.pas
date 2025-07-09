@@ -3,18 +3,17 @@ unit cep.model;
 interface
 
 uses
-  cep.model.dados, cep.model.entities,REST.Json;
+  cep.model.dados, cep.model.entities, REST.Json;
 
 type
   TCepModel = class
   private
     FDmDados: TdmDados;
   public
-    DadosCep: TDadosCepDTO;
     constructor Create;
     destructor Destroy; override;
 
-    procedure ObterDadosCep(const aCep: String);
+    function ObterDadosCep(const aCep: String): TDadosCepDTO;
   end;
 
 implementation
@@ -35,11 +34,12 @@ begin
   inherited;
 end;
 
-procedure TCepModel.ObterDadosCep(const aCep: String);
+function TCepModel.ObterDadosCep(const aCep: String): TDadosCepDTO;
 begin
   FDmDados.restRequest.Params[0].Value := aCep;
   FDmDados.restRequest.Execute;
-  DadosCep := TJson.JsonToObject<TDadosCepDTO>(FDmDados.restResponse.Content);
+
+  Result := TJson.JsonToObject<TDadosCepDTO>(FDmDados.restResponse.Content);
 
 end;
 

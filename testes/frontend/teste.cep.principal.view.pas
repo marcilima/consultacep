@@ -33,7 +33,7 @@ uses
 
 procedure TTestePrincipalView.ConsultarCepInvalido(const AValue, aMensagemErro: String);
 var
-   ReturnValue: Boolean;
+  ReturnValue: Boolean;
 begin
   FPrincipal.edtCep.Text := AValue;
   FPrincipal.btnBuscarCep.Click;

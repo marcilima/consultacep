@@ -11,8 +11,6 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   TextHeight = 15
   object Label1: TLabel
     Left = 8
@@ -41,7 +39,6 @@ object frmPrincipal: TfrmPrincipal
     Height = 25
     Caption = 'Buscar Cep'
     TabOrder = 0
-    OnClick = btnBuscarCepClick
   end
   object edtCep: TEdit
     Left = 8

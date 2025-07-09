@@ -9,10 +9,9 @@ uses
   cep.model in 'models\cep.model.pas';
 
 {$R *.res}
-
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  TCepController.ShowView;
   Application.Run;
 end.
