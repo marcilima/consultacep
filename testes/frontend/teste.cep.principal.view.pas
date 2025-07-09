@@ -4,13 +4,13 @@ interface
 
 uses
   DUnitX.TestFramework,
-  cep.principal.view;
+  cep.controller;
 
 type
   [TestFrontend]
   TTestePrincipalView = class
   private
-    FPrincipal: TfrmPrincipal;
+    FCepController: TCepController;
   public
     [Setup]
     procedure Setup;
@@ -35,31 +35,31 @@ procedure TTestePrincipalView.ConsultarCepInvalido(const AValue, aMensagemErro: 
 var
   ReturnValue: Boolean;
 begin
-  FPrincipal.edtCep.Text := AValue;
-  FPrincipal.btnBuscarCep.Click;
-  ReturnValue := (FPrincipal.MensagemErro = aMensagemErro);
+  FCepController.View.edtCep.Text := AValue;
+  FCepController.View.btnBuscarCep.Click;
+  ReturnValue := (FCepController.MensagemErro = aMensagemErro);
 
   Assert.IsTrue(ReturnValue,aMensagemErro);
 end;
 
 procedure TTestePrincipalView.Setup;
 begin
-  FPrincipal:= TfrmPrincipal.Create(nil);
+  FCepController:= TCepController.Create();
 end;
 
 procedure TTestePrincipalView.TearDown;
 begin
-  FPrincipal.Free;
+  FCepController.Free;
 end;
 
 procedure TTestePrincipalView.ConsultarCep(const AValue : String; const logradouro: String);
 var
-   ReturnValue: Boolean;
+  ReturnValue: Boolean;
 begin
-  FPrincipal.edtCep.Text := AValue;
-  FPrincipal.btnBuscarCep.Click;
+  FCepController.View.edtCep.Text := AValue;
+  FCepController.View.btnBuscarCep.Click;
   TDUnitX.CurrentRunner.Status('Consultado cep'+ AValue);
-  ReturnValue := (FPrincipal.edtLogradouro.Text = logradouro);
+  ReturnValue := (FCepController.View.edtLogradouro.Text = logradouro);
 
   Assert.IsTrue(ReturnValue,'Retornou Logradouro correto');
 

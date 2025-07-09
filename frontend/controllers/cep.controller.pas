@@ -19,6 +19,9 @@ type
     constructor Create;
     procedure AtualizarView;
     class procedure ShowView;
+
+    property View: TFrmPrincipal read FView;
+    property MensagemErro: string read FMensagemErro;
   end;
 
 implementation

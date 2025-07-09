@@ -9,11 +9,11 @@ type
   private
     
   public
-    function ConsultarCep(const aUrl:String): String;
+    function ConsultarCep(const aUrl:string): string;
     
-    function formatarJsonVIACEP(json: String): String;
-    function formatarJsonAPICEP(json: String): String;
-    function formatarJsonAWESOME_API(json: String): String; 
+    function formatarJsonVIACEP(json: string): string;
+    function formatarJsonAPICEP(json: string): string;
+    function formatarJsonAWESOME_API(json: string): string;
   end;
 
 implementation
@@ -60,14 +60,15 @@ begin
   jsonApiCep := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(json), 0) as TJSONObject;
   try
     outputJson := TJsonObject.Create;
-    outputJson.AddPair('cep', jsonApiCep.GetValue<String>('code'));
-    outputJson.AddPair('logradouro', jsonApiCep.GetValue<String>('address'));
+    outputJson.AddPair('cep', jsonApiCep.GetValue<string>('code'));
+    outputJson.AddPair('logradouro', jsonApiCep.GetValue<string>('address'));
     outputJson.AddPair('complemento', '');
-    outputJson.AddPair('bairro', jsonApiCep.GetValue<String>('district'));
-    outputJson.AddPair('cidade', jsonApiCep.GetValue<String>('city'));
-    outputJson.AddPair('uf', jsonApiCep.GetValue<String>('state'));
+    outputJson.AddPair('bairro', jsonApiCep.GetValue<string>('district'));
+    outputJson.AddPair('cidade', jsonApiCep.GetValue<string>('city'));
+    outputJson.AddPair('uf', jsonApiCep.GetValue<string>('state'));
     outputJson.AddPair('ibge', '');
     outputJson.AddPair('estado', '');
+
     Result := outputJson.ToJSON;
   finally
     FreeAndNil(jsonApiCep);
