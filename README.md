@@ -22,4 +22,4 @@
 3. Agora basta realizar as consultas.
 
 ## Binários para Download
-  https://github.com/marcilima/consultacep/blob/main/bin.zip
+  https://github.com/marcilima/consultacep/raw/refs/heads/main/bin.zip
