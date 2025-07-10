@@ -5,59 +5,57 @@ interface
 uses REST.Client, REST.HttpClient, cep.model;
 
 type
+  TServConsultaCep = (scsVIA_CEP, scsAPI_CEP, scsAWESOME_API);
+
+  TServConsultaCepHelper = record helper for TServConsultaCep
+    function GetLinkServer: string;
+
+  end;
+
   TCepService = class
   private
     FCepModel : TCepModel;
-    function extrairNumerosCep(ACep: String): String;
+    function ExtrairNumerosCep(ACep: String): String;
   public
     constructor create;
     destructor Destroy; override;
     function ConsultarCep(ACep: String): String;
   end;
+
 implementation
 
 uses
   System.SysUtils, System.Rtti, System.JSON;
 
 const
-  VIA_CEP = 'http://viacep.com.br/ws/%s/json';
-  API_CEP = 'https://cdn.apicep.com/file/apicep/%s.json';
-  AWESOME_API = 'https://cep.awesomeapi.com.br/json/%s';
+  cSeverLinks : array [TServConsultaCep] of string  = ('http://viacep.com.br/ws/%s/json',
+                                                       'https://cdn.apicep.com/file/apicep/%s.json',
+                                                       'https://cep.awesomeapi.com.br/json/%s');
 
 { TCepService }
 
 function TCepService.ConsultarCep(ACep: String): String;
 var
-  urlParaConsulta, resposta: String;
+  LUrlParaConsulta, resposta: String;
+  LServer: TServConsultaCep;
 begin
 
   ACep := extrairNumerosCep(ACep);
 
-  urlParaConsulta:= Format(VIA_CEP, [ACep]);
-  resposta := FCepModel.ConsultarCep(urlParaConsulta);
-
-  if resposta <> '' then
+  for LServer := Low(TServConsultaCep) to High(TServConsultaCep) do
   begin
-    Result := FCepModel.formatarJsonVIACEP(resposta);
-    Exit;
-  end;
+    if LServer = scsAPI_CEP then
+      LUrlParaConsulta := Format(LServer.GetLinkServer, [Copy(ACep,1, 5) + '-' + Copy(ACep,6, 3)])
+    else
+      LUrlParaConsulta := Format(LServer.GetLinkServer, [ACep]);
 
-  urlParaConsulta := Format(API_CEP, [Copy(ACep,1, 5) + '-' + Copy(ACep,6, 3)]);
-  resposta := FCepModel.ConsultarCep(urlParaConsulta);
+    resposta := FCepModel.ConsultarCep(LUrlParaConsulta);
 
-  if resposta <> '' then
-  begin
-    Result := FCepModel.formatarJsonAPICEP(resposta);
-    Exit;
-  end;
-
-  urlParaConsulta := Format(AWESOME_API, [ACep]);
-  resposta := FCepModel.ConsultarCep(urlParaConsulta);
-
-  if resposta <> '' then
-  begin
-    Result := FCepModel.formatarJsonAWESOME_API(resposta);
-    Exit
+    if resposta <> '' then
+    begin
+      Result := FCepModel.formatarJsonVIACEP(resposta);
+      Break;
+    end;
   end;
 
 end;
@@ -73,14 +71,22 @@ begin
   inherited;
 end;
 
-function TCepService.extrairNumerosCep(ACep: String): String;
+function TCepService.ExtrairNumerosCep(ACep: String): String;
 var
   I : Integer;
 begin
    Result := '';
-   for I := 1 To Length(ACep) do
-     if ACep [I] In ['0'..'9'] Then
-          Result := Result + ACep [I];
+
+   for I := 1 to Length(ACep) do
+    if ACep [I] in ['0'..'9'] then
+      Result := Result + ACep [I];
+end;
+
+{ TServConsultaCepHelper }
+
+function TServConsultaCepHelper.GetLinkServer: string;
+begin
+  Result := cSeverLinks[Self];
 end;
 
 end.
