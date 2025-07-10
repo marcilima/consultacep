@@ -53,7 +53,12 @@ begin
 
     if resposta <> '' then
     begin
-      Result := FCepModel.formatarJsonVIACEP(resposta);
+      case LServer of
+        scsVIA_CEP: Result := FCepModel.formatarJsonVIACEP(resposta);
+        scsAPI_CEP: Result := FCepModel.formatarJsonAPICEP(resposta);
+        scsAWESOME_API: Result := FCepModel.formatarJsonAWESOME_API(resposta);
+      end;
+
       Break;
     end;
   end;
